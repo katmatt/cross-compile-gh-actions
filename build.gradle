@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+
+    // Apply Graal plugin
+    id 'com.palantir.graal' version '0.7.1'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:29.0-jre'
+
+    testImplementation 'junit:junit:4.13'
+}
+
+application {
+    mainClassName = 'com.maschinenstuermer.crosscompile.demo.App'
+}
+
+apply plugin: 'com.palantir.graal'
+
+graal {
+    graalVersion '20.0.0'
+    outputName 'cross-compile-demo'
+    mainClass 'com.maschinenstuermer.crosscompile.demo.App'
+}
