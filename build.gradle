@@ -22,6 +22,17 @@ application {
 
 apply plugin: 'com.palantir.graal'
 
+
+
+task zipExecutable(type: Zip) {
+    dependsOn 'nativeImage'
+    
+    archiveFileName = "cross-compile-demo.zip"
+    destinationDirectory = file("$buildDir/dist")
+
+    from "$buildDir/graal"
+}
+
 graal {
     graalVersion '20.0.0'
     outputName 'cross-compile-demo'
