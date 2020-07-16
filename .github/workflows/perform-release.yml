@@ -1,14 +1,31 @@
 name: Perform release
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
   perform-release-linux:
+    needs: create-release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
@@ -22,14 +39,14 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release_linux.outputs.upload_url }}  
+        upload_url: ${{ needs.create_release.outputs.upload_url }}  
         asset_path: ./build/dist/cross-compile-demo.zip
         asset_name: cross-compile-demo-linux_amd64.zip
         asset_content_type: application/zip
   perform-release-macos:
     runs-on: macos-latest
+    needs: create-release
     steps:
-    - uses: actions/checkout@v2
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
@@ -43,7 +60,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release_macos.outputs.upload_url }}  
+        upload_url: ${{ needs.create_release.outputs.upload_url }}  
         asset_path: ./build/dist/cross-compile-demo.zip
         asset_name: cross-compile-demo-darwin_amd64.zip
         asset_content_type: application/zip
