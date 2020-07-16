@@ -1,4 +1,4 @@
-name: Build and release native images
+name: Perform release
 
 on:
   release:
