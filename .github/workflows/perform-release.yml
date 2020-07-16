@@ -9,11 +9,11 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
       - uses: actions/checkout@v2
       - name: Create Release
-        id: create_release
+        id: create-release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,7 +40,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ needs.create_release.outputs.upload_url }}  
+        upload_url: ${{ needs.create-release.outputs.upload_url }}  
         asset_path: ./build/dist/cross-compile-demo.zip
         asset_name: cross-compile-demo-linux_amd64.zip
         asset_content_type: application/zip
@@ -62,7 +62,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ needs.create_release.outputs.upload_url }}  
+        upload_url: ${{ needs.create-release.outputs.upload_url }}  
         asset_path: ./build/dist/cross-compile-demo.zip
         asset_name: cross-compile-demo-darwin_amd64.zip
         asset_content_type: application/zip
