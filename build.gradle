@@ -26,6 +26,7 @@ graal {
     graalVersion '20.0.0'
     outputName 'cross-compile-demo'
     mainClass 'com.maschinenstuermer.crosscompile.demo.App'
+    javaVersion '11'
 }
 
 task zipExecutable(type: Zip) {
