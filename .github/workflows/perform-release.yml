@@ -17,16 +17,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build native image with Gradle
       run: ./gradlew zipExecutable
-    - name: Create Release
-      id: create_release_linux
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
@@ -48,16 +38,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build native image with Gradle
       run: ./gradlew zipExecutable
-    - name: Create Release
-      id: create_release_macos
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
