@@ -78,7 +78,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Install Windows SDK for Windows 7
-      run: choco install --no-progress windows-sdk-7.1 kb2519277
+      run: choco install --no-progress kb2519277
     - name: Build native image with Gradle
       run: ./gradlew zipExecutable
     - name: Upload Release Asset
