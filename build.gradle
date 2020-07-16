@@ -22,7 +22,11 @@ application {
 
 apply plugin: 'com.palantir.graal'
 
-
+graal {
+    graalVersion '20.0.0'
+    outputName 'cross-compile-demo'
+    mainClass 'com.maschinenstuermer.crosscompile.demo.App'
+}
 
 task zipExecutable(type: Zip) {
     dependsOn 'nativeImage'
@@ -31,10 +35,4 @@ task zipExecutable(type: Zip) {
     destinationDirectory = file("$buildDir/dist")
 
     from "$buildDir/graal"
-}
-
-graal {
-    graalVersion '20.0.0'
-    outputName 'cross-compile-demo'
-    mainClass 'com.maschinenstuermer.crosscompile.demo.App'
 }
